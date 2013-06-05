@@ -2,7 +2,6 @@
 
 using namespace cocos2d;
 
-
 CCScene* Battle::scene()
 {
     CCScene * scene = NULL;
@@ -102,7 +101,7 @@ void Battle::movePlayer()
 	velocityY = velocity * sin(alfa*3.14159/180);
 
 	//----- Player on the screen -----
-	if(actualX < winSize.width/2)
+	if(actualX < winSize.width/2 || actualX > (2048-winSize.width/2))
 	{
 		player->setPosition( ccp(player->getPositionX() + velocityX, player->getPositionY()) );
 	}
@@ -113,7 +112,7 @@ void Battle::movePlayer()
 	actualY += velocityY;
 
 	//----- player out of the screen -----
-	// *** left border ***
+	// *** right border ***
 	if(actualX < 0 && alfa != 0 && flag)
 	// saving point of leaving screen and changing flag
 	{
@@ -137,7 +136,29 @@ void Battle::movePlayer()
 		player->setPositionY(actualY);
 	}
 
-	// *** top border ***
+	// *** left border ***
+	if(actualX > 2048 && alfa != 180 && flag)
+	// saving point of leaving screen and changing flag
+	{
+		leaveY = actualY;
+		flag = false;
+	}
+	else if(actualX < 2048 && !flag)
+	{
+		flag = true;
+	}
+	if(actualX > 2078 && alfa != 180)
+	// change alfa when all picture of player leave screen
+	{
+		alfa = 0;
+	}
+	if(actualX > 2148 && alfa != 180)
+	// return of player on the screen
+	{
+		alfa = 180;
+		actualY = leaveY;
+		player->setPositionY(actualY);
+	}
 
 }
 
@@ -145,7 +166,7 @@ void Battle::moveBackgraund()
 {
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	CCRect rect = background->getTextureRect();
-	if(actualX >= winSize.width/2)
+	if(actualX > winSize.width/2 && actualX < (2048-winSize.width/2))
 	{
 		if(rect.origin.x > 4096){
 			background->setTextureRect(CCRectMake(0,rect.origin.y,rect.size.width,rect.size.height));
