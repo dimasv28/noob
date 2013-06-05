@@ -2,6 +2,7 @@
 
 using namespace cocos2d;
 
+
 CCScene* Battle::scene()
 {
     CCScene * scene = NULL;
