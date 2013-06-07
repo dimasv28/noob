@@ -1,4 +1,5 @@
 #include "BattleScene.h"
+#include "math.h"
 
 using namespace cocos2d;
 
@@ -97,69 +98,87 @@ bool Battle::init()
 void Battle::movePlayer()
 {
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	velocityX = velocity * cos(alfa*3.14159/180);
-	velocityY = velocity * sin(alfa*3.14159/180);
+	
+	velocityX = velocity * cos(alfa*M_PI/180);
+	velocityY = velocity * sin(alfa*M_PI/180);
 
 	//----- Player on the screen -----
-	if(actualX < winSize.width/2 || actualX > (2048-winSize.width/2))
+	if(actualX <= winSize.width/2 || actualX >= (2048-winSize.width/2))
 	{
-		player->setPosition( ccp(player->getPositionX() + velocityX, player->getPositionY()) );
+		player->setPositionX(player->getPositionX() + velocityX);
 	}
 	player->setPositionY( player->getPositionY() + velocityY );
 	player->setRotation(-alfa);
+
+	//----- player out of the screen -----
+	// *** left border ***
+	if(actualX <= abs(velocityX) && actualX >= -abs(velocityX) && alfa != 0)
+	// saving point of leaving screen and changing flag
+	{
+		leaveY = actualY;
+	}
+	else if(actualX <= -30+abs(velocityX) && actualX >= -30-abs(velocityX) && alfa != 0)
+	// change alfa when all picture of player leave screen
+	{
+		alfa = 180;
+	}
+	else if(actualX <= -100+abs(velocityX) && actualX >= -100-abs(velocityX) && alfa != 0)
+	// return player on the screen
+	{
+		alfa = 0;
+		actualY = leaveY;
+		player->setPositionY(actualY);
+	}
+
+	// *** right border ***
+	if(actualX >= 2048-abs(velocityX) && actualX <= 2048+abs(velocityX) && alfa != 180)
+	// saving point of leaving screen and changing flag
+	{
+		leaveY = actualY;
+	}
+	else if(actualX >= 2078-abs(velocityX) && actualX <= 2078+abs(velocityX) && alfa != 180)
+	// change alfa when all picture of player leave screen
+	{
+		alfa = 0;
+	}
+	else if(actualX >= 2148-abs(velocityX) && actualX <= 2148+abs(velocityX) && alfa != 180)
+	// return player on the screen
+	{
+		alfa = 180;
+		actualY = leaveY;
+		player->setPositionY(actualY);
+	}
+
+	// *** top border ***
+	if(actualY >= 600-abs(velocityY) && actualY <= 600+abs(velocityY) && alfa != -90)
+	// saving point of leaving screen and changing flag
+	{
+			leaveX = actualX;
+	}
+	else if(actualY >= 630-abs(velocityY) && actualY <= 630+abs(velocityY) && alfa != -90)
+	// change alfa when all picture of player leave screen
+	{
+		alfa = 90;
+	}
+	else if(actualY >= 700 && alfa != -90)
+	// return player on the screen
+	{
+		alfa = -90;
+		actualX = leaveX;
+		if(player->getPositionX() > winSize.width/2-velocity && player->getPositionX() < winSize.width/2+velocity )
+		{
+			leaveX = winSize.width/2;
+		}
+		else
+		{
+
+			leaveX = player->getPositionX();
+		}
+		player->setPositionX(leaveX);
+	}
 	
 	actualX += velocityX;
 	actualY += velocityY;
-
-	//----- player out of the screen -----
-	// *** right border ***
-	if(actualX < 0 && alfa != 0 && flag)
-	// saving point of leaving screen and changing flag
-	{
-		leaveY = actualY;
-		flag = false;
-	}
-	else if(actualX > 0 && !flag)
-	{
-		flag = true;
-	}
-	if(actualX < -30 && alfa != 0)
-	// change alfa when all picture of player leave screen
-	{
-		alfa = 180;
-	}
-	if(actualX < -100 && alfa != 0)
-	// return of player on the screen
-	{
-		alfa = 0;
-		actualY = leaveY;
-		player->setPositionY(actualY);
-	}
-
-	// *** left border ***
-	if(actualX > 2048 && alfa != 180 && flag)
-	// saving point of leaving screen and changing flag
-	{
-		leaveY = actualY;
-		flag = false;
-	}
-	else if(actualX < 2048 && !flag)
-	{
-		flag = true;
-	}
-	if(actualX > 2078 && alfa != 180)
-	// change alfa when all picture of player leave screen
-	{
-		alfa = 0;
-	}
-	if(actualX > 2148 && alfa != 180)
-	// return of player on the screen
-	{
-		alfa = 180;
-		actualY = leaveY;
-		player->setPositionY(actualY);
-	}
-
 }
 
 void Battle::moveBackgraund()
