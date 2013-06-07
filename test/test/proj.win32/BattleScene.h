@@ -4,10 +4,11 @@
 #include "cocos2d.h"
 #include "Box2D/Box2D.h"
 #include "SimpleAudioEngine.h"
+#include "keyboard_dispatcher\CCKeyboardDispatcher.h"
 
 using namespace cocos2d;
 
-class Battle : public CCLayer
+class Battle : public CCLayer, public cocos2d::CCKeyboardDelegate
 {
 protected:
 	CCSprite *background;
@@ -23,9 +24,9 @@ protected:
 	void addTarget();
 	void moveBackgraund();
 	void movePlayer();
-	void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
-	void upButton(CCObject* pSender);
-	void downButton(CCObject* pSender);
+
+	void keyUp(int keyCode);
+	void keyDown(int keyCode);
 
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone

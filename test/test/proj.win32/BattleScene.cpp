@@ -61,32 +61,12 @@ bool Battle::init()
 		background->setPosition( ccp(background->getContentSize().width/2,background->getContentSize().height/2) );
 		this->addChild(background);
 
-		// buttons
-		// Create menu items
-        CCMenuItemImage *pUpButton = CCMenuItemImage::create(
-            "CloseNormal.png",
-            "CloseSelected.png",
-            this,
-            menu_selector(Battle::upButton));
-		CCMenuItemImage *pDownButton = CCMenuItemImage::create(
-            "CloseNormal.png",
-            "CloseSelected.png",
-            this,
-            menu_selector(Battle::downButton));
-		
-		CCMenu *menu = CCMenu::create(pUpButton, pDownButton, NULL);
-		menu->setPosition(CCPointZero);
-		pUpButton->setPosition( ccp(winSize.width/2 - 20,50) );
-		pDownButton->setPosition( ccp(winSize.width/2 + 20,50) );
-		this->addChild(menu, 1);
-
 		// Call game logic
 		this->schedule( schedule_selector(Battle::gameLogicBackgound), 0.0 );
 		this->schedule( schedule_selector(Battle::gameLogicPlayer), 0.0 );
 		this->schedule( schedule_selector(Battle::gameLogicTarget), 1.0 );
 
-		//this->setTouchEnabled(true);
-		//CCDirector::sharedDirector()->getKeypadDispatcher()->addDelegate(this);
+		CCDirector::sharedDirector()->getKeyboardDispatcher()->addDelegate(this);
 
 		bRet = true;
 
@@ -253,26 +233,45 @@ void Battle::spriteMoveFinished(CCNode* sender)
 {
 	CCSprite *sprite = (CCSprite *)sender;
 	this->removeChild(sprite, true);
+	CCDirector::sharedDirector()->getKeyboardDispatcher()->removeDelegate(this);
 }
 
-void Battle::ccTouchesEnded(CCSet* touches, CCEvent* event)
+void Battle::keyUp(int keyCode)
 {
-	// Choose one of the touches to work with
-	CCTouch* touch = (CCTouch*)( touches->anyObject() );
-	CCPoint location = touch->getLocationInView();
-	location = CCDirector::sharedDirector()->convertToGL(location);
-
-	// Player
-	int speed = 5;
-	player->setPosition( ccp(player->getPositionX() + speed, player->getPositionY()) );
+	if(keyCode == 38)
+	{// up key
+		alfa+=5;
+	}
+	else if(keyCode == 40)
+	{// down key
+		alfa-=5;
+	}
+	else if(keyCode == 39)
+	{// right key
+		alfa-=5;
+	}
+	else if(keyCode == 37)
+	{// left key
+		alfa+=5;
+	}
 }
 
-void Battle::upButton(CCObject* pSender)
+void Battle::keyDown(int keyCode)
 {
-	alfa+=30;
-}
-
-void Battle::downButton(CCObject* pSender)
-{
-	alfa-=30;
+	if(keyCode == 38)
+	{// up key
+		alfa+=5;
+	}
+	else if(keyCode == 40)
+	{// down key
+		alfa-=5;
+	}
+	else if(keyCode == 39)
+	{// right key
+		alfa-=5;
+	}
+	else if(keyCode == 37)
+	{// left key
+		alfa+=5;
+	}
 }
