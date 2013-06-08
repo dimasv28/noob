@@ -1,4 +1,5 @@
 #include "BattleScene.h"
+#include "HelloWorldScene.h"
 #include "math.h"
 
 using namespace cocos2d;
@@ -39,7 +40,6 @@ bool Battle::init()
 		actualY = winSize.height/2;
 		leaveX = 0;
 		leaveY = 0;
-		flag = true;
 		
 		// Backgraund
 		CCSprite* pBackSprite = CCSprite::create("back.png");
@@ -52,7 +52,7 @@ bool Battle::init()
 		player = CCSprite::create("Player.png");
 		player->setScale(0.5);
 		player->setPosition( ccp(actualX, actualY) );
-		this->addChild(player);
+		this->addChild(player, 1);
 
 		// move background
 		background = CCSprite::create("moveBack.png");
@@ -151,10 +151,19 @@ void Battle::movePlayer()
 		}
 		else
 		{
-
 			leaveX = player->getPositionX();
 		}
 		player->setPositionX(leaveX);
+	}
+
+	// *** bottom border ***
+	if(actualY >= 80-abs(velocityY) && actualY <= 80+abs(velocityY))
+	// game over
+	{
+		CCSprite *gameOver = CCSprite::create("gameover.png");
+		gameOver->setPosition( ccp(winSize.width/2,winSize.height/2) );
+		this->addChild(gameOver,2);
+		pauseSchedulerAndActions();
 	}
 	
 	actualX += velocityX;
@@ -233,26 +242,14 @@ void Battle::spriteMoveFinished(CCNode* sender)
 {
 	CCSprite *sprite = (CCSprite *)sender;
 	this->removeChild(sprite, true);
-	CCDirector::sharedDirector()->getKeyboardDispatcher()->removeDelegate(this);
 }
 
 void Battle::keyUp(int keyCode)
 {
-	if(keyCode == 38)
-	{// up key
-		alfa+=5;
-	}
-	else if(keyCode == 40)
-	{// down key
-		alfa-=5;
-	}
-	else if(keyCode == 39)
-	{// right key
-		alfa-=5;
-	}
-	else if(keyCode == 37)
-	{// left key
-		alfa+=5;
+	if(keyCode == 27)
+	{// exit with Esc
+	    CCScene *pHelloScene = HelloWorld::scene();
+		CCDirector::sharedDirector()->replaceScene(pHelloScene);
 	}
 }
 

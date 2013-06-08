@@ -39,6 +39,9 @@
     <Image Include="..\Resources\moveBack.png">
       <Filter>resource</Filter>
     </Image>
+    <Image Include="..\Resources\gameover.png">
+      <Filter>resource</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="test.rc">
