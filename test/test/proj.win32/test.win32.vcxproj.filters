@@ -64,6 +64,9 @@
     <ClInclude Include="BattleScene.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -76,6 +79,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="BattleScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

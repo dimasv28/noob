@@ -15,7 +15,6 @@ protected:
 	CCSprite *player;
 	float velocity,velocityX,velocityY,actualX,actualY,leaveX,leaveY;
 	int alfa;
-	float timeBetweenBullets;
 
 	void gameLogicBackgound(float dt);
 	void gameLogicTarget(float dt);

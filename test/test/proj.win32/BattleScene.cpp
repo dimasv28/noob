@@ -3,8 +3,6 @@
 #include "math.h"
 #include <windows.h>
 
-using namespace cocos2d;
-
 CCScene* Battle::scene()
 {
     CCScene * scene = NULL;
@@ -41,7 +39,6 @@ bool Battle::init()
 		actualY = winSize.height/2;
 		leaveX = 0;
 		leaveY = 0;
-		timeBetweenBullets = 0;
 		
 		// Backgraund
 		CCSprite* pBackSprite = CCSprite::create("back.png");
@@ -282,19 +279,12 @@ void Battle::keyDown(int keyCode)
 	{// left key
 		alfa+=5;
 	}
-	/*if(keyCode == 32)
-	{
-		if(timeBetweenBullets > 0.3)
-		{
-			timeBetweenBullets = 0;
-			fireSomeBullets();
-		}
-	}*/
 }
 
 void Battle::fireSomeBullets()
 {
-	 // Set up initial location of projectile
+	int randError = rand() % 30 + 1;
+
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	CCSprite *bullet = CCSprite::create("bullet.png");
 	bullet->setPosition( ccp(player->getPositionX()+20, player->getPositionY()) );
@@ -304,8 +294,8 @@ void Battle::fireSomeBullets()
 	// Move bullet to actual endpoint
 	bullet->runAction( CCSequence::create(
 		CCMoveTo::create(velocity+2,
-			ccp(player->getPositionX()+1000*cos(alfa*M_PI/180),
-			player->getPositionY()+1000*sin(alfa*M_PI/180))),
+			ccp(player->getPositionX() + 1000*cos(alfa*M_PI/180) + randError,
+			player->getPositionY() + 1000*sin(alfa*M_PI/180) + randError)),
 		CCCallFuncN::create(this, 
 			callfuncN_selector(Battle::spriteMoveFinished)),NULL) );
 }
