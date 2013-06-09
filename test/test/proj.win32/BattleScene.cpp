@@ -2,6 +2,7 @@
 #include "HelloWorldScene.h"
 #include "math.h"
 #include <windows.h>
+#include "Bullet.h"
 
 CCScene* Battle::scene()
 {
@@ -283,21 +284,8 @@ void Battle::keyDown(int keyCode)
 
 void Battle::fireSomeBullets()
 {
-	int randError = rand() % 30 + 1;
-
-	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	CCSprite *bullet = CCSprite::create("bullet.png");
-	bullet->setPosition( ccp(player->getPositionX()+20, player->getPositionY()) );
-	bullet->setRotation(-alfa);
-	this->addChild(bullet);
-
-	// Move bullet to actual endpoint
-	bullet->runAction( CCSequence::create(
-		CCMoveTo::create(velocity+2,
-			ccp(player->getPositionX() + 1000*cos(alfa*M_PI/180) + randError,
-			player->getPositionY() + 1000*sin(alfa*M_PI/180) + randError)),
-		CCCallFuncN::create(this, 
-			callfuncN_selector(Battle::spriteMoveFinished)),NULL) );
+	Bullet *bullet = Bullet::create(player->getPosition(),alfa);
+	addChild(bullet);
 }
 
 void Battle::ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event)

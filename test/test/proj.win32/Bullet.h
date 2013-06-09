@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Box2D/Box2D.h"
+#include "BattleScene.h"
 
 using namespace cocos2d;
 
@@ -10,12 +11,12 @@ class Bullet : public CCSprite
 {
 protected:
 
-public:
-    // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
-    virtual bool init();
+	void update();
 
-    // implement the "static node()" method manually
-    CREATE_FUNC(Bullet);
+public:
+	static Bullet* create(CCPoint point, int alfa);
+
+    virtual bool init();
 };
 
 #endif  // __BULLET_H__
