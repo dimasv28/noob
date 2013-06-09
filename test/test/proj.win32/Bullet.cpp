@@ -5,7 +5,6 @@ bool Bullet::init()
     bool bRet = false;
     do 
     {
-
 		
 		bRet = true;
 
@@ -17,13 +16,14 @@ bool Bullet::init()
 
 Bullet* Bullet::create(CCPoint point, int alfa)
 {
-	int randError = rand() % 30 + 1;
-
-	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	Bullet *bul = new Bullet();  
+	Bullet *bul = new Bullet(); 
+	bul->alfaProt = alfa;
 	bul->initWithFile("bullet.png");
-	bul->setPosition( ccp(point.x+100, point.y) );
+	bul->setPosition( ccp(point.x+20, point.y) );
 	bul->setRotation(-alfa);
+
+	bul->schedule( schedule_selector(Bullet::update), 0.0 );
+
 	return bul;
 
 	// Move bullet to actual endpoint
@@ -35,8 +35,13 @@ Bullet* Bullet::create(CCPoint point, int alfa)
 			callfuncN_selector(Battle::spriteMoveFinished)),NULL) );*/
 }
 
-
-void Bullet::update()
+void Bullet::update(float dt)
 {
-	
+	float velocity = 4;
+	int randError = rand() % 30 + 1;
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
+	this->setPosition( ccp(
+		this->getPositionX() + velocity*cos(alfaProt*M_PI/180),
+		this->getPositionY() + velocity*sin(alfaProt*M_PI/180)));
 }

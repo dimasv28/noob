@@ -290,7 +290,7 @@ void Battle::fireSomeBullets()
 
 void Battle::ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event)
 {
-	this->schedule( schedule_selector(Battle::gameLogicFire), 0.1 );
+	this->schedule( schedule_selector(Battle::gameLogicFire), 0.2 );
 }
 
 void Battle::ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event)

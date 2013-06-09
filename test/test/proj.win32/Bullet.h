@@ -10,8 +10,9 @@ using namespace cocos2d;
 class Bullet : public CCSprite
 {
 protected:
+	int alfaProt;
 
-	void update();
+	void update(float dt);
 
 public:
 	static Bullet* create(CCPoint point, int alfa);
