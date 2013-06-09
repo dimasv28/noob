@@ -30,9 +30,6 @@
     <Image Include="..\Resources\Player.png">
       <Filter>resource</Filter>
     </Image>
-    <Image Include="..\Resources\hamster.jpg">
-      <Filter>resource</Filter>
-    </Image>
     <Image Include="..\Resources\back.png">
       <Filter>resource</Filter>
     </Image>
@@ -40,6 +37,9 @@
       <Filter>resource</Filter>
     </Image>
     <Image Include="..\Resources\gameover.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="..\Resources\bullet.png">
       <Filter>resource</Filter>
     </Image>
   </ItemGroup>

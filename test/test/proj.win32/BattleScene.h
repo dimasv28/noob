@@ -15,17 +15,23 @@ protected:
 	CCSprite *player;
 	float velocity,velocityX,velocityY,actualX,actualY,leaveX,leaveY;
 	int alfa;
+	float timeBetweenBullets;
 
 	void gameLogicBackgound(float dt);
 	void gameLogicTarget(float dt);
 	void gameLogicPlayer(float dt);
+	void gameLogicFire(float dt);
 	void spriteMoveFinished(CCNode* sender);
 	void addTarget();
 	void moveBackgraund();
 	void movePlayer();
+	void fireSomeBullets();
 
 	void keyUp(int keyCode);
 	void keyDown(int keyCode);
+
+	void ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
+	void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
 
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone

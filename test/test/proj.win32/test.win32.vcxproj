@@ -123,10 +123,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Image Include="..\Resources\back.png" />
+    <Image Include="..\Resources\bullet.png" />
     <Image Include="..\Resources\CloseNormal.png" />
     <Image Include="..\Resources\CloseSelected.png" />
     <Image Include="..\Resources\gameover.png" />
-    <Image Include="..\Resources\hamster.jpg" />
     <Image Include="..\Resources\HelloWorld.png" />
     <Image Include="..\Resources\moveBack.png" />
     <Image Include="..\Resources\Player.png" />
