@@ -7,6 +7,8 @@
 
 using namespace cocos2d;
 
+class Player;
+
 class Target : public CCSprite
 {
 protected:
@@ -16,11 +18,8 @@ protected:
 	void update(float dt);
 
 public:
-	static CCSprite *player;
-	static float *playerVelocityX;
-	static float *playerVelocityY;
+	static Player *player;
 	static Target* create();
-	virtual bool init();
 };
 
 #endif  // __TARGET_H__

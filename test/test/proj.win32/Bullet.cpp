@@ -1,13 +1,16 @@
 #include "Bullet.h"
 
-Bullet* Bullet::create(CCPoint pointIn, int alfaIn, float velocityIn)
+Bullet* Bullet::create()
 {
-	Bullet *bul = new Bullet(); 
-	bul->alfa = alfaIn;
-	bul->velocity = velocityIn;
+
+	Bullet *bul = new Bullet();
+	bul->alfa = player->getAlfa();
+	bul->velocity = player->getVelocity();
 	bul->initWithFile("bullet.png");
-	bul->setPosition( ccp(pointIn.x, pointIn.y) );
-	bul->setRotation(-alfaIn);
+	bul->setPosition( ccp(
+		player->getPositionX() + player->getContentSize().width/4*cos(bul->alfa*M_PI/180),
+		player->getPositionY() + player->getContentSize().height/4*sin(bul->alfa*M_PI/180)) );
+	bul->setRotation(-bul->alfa);
 
 	bul->schedule( schedule_selector(Bullet::update), 0.0 );
 

@@ -5,26 +5,22 @@
 #include "Box2D/Box2D.h"
 #include "SimpleAudioEngine.h"
 #include "keyboard_dispatcher\CCKeyboardDispatcher.h"
+#include "Player.h"
+#include "Bullet.h"
+#include "Target.h"
 
 using namespace cocos2d;
+
+class Player;
 
 class Battle : public CCLayer, public cocos2d::CCKeyboardDelegate
 {
 protected:
 	CCSprite *background;
-	CCSprite *player;
-	float velocity,velocityX,velocityY,actualX,actualY,leaveX,leaveY;
-	int alfa;
+	Player *player;
 
-	void gameLogicBackgound(float dt);
-	void gameLogicTarget(float dt);
-	void gameLogicPlayer(float dt);
-	void gameLogicFire(float dt);
-	void spriteMoveFinished(CCNode* sender);
-	void addTarget();
-	void moveBackgraund();
-	void movePlayer();
-	void fireSomeBullets();
+	void moveBackgraund(float dt);
+	void fireSomeBullets(float dt);
 
 	void keyUp(int keyCode);
 	void keyDown(int keyCode);

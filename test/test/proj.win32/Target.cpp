@@ -1,19 +1,6 @@
 #include "Target.h"
 #include "math.h"
 
-// on "init" you need to initialize your instance
-bool Target::init()
-{
-    bool bRet = false;
-    do 
-    {
-		bRet = true;
-
-    } while (0);
-
-    return bRet;
-}
-
 Target* Target::create()
 {
 	Target *target = new Target();
