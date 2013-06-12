@@ -3,6 +3,9 @@
 #include "math.h"
 #include <windows.h>
 #include "Bullet.h"
+#include "Target.h"
+
+CCSprite* Target::player = NULL;
 
 CCScene* Battle::scene()
 {
@@ -29,9 +32,10 @@ CCScene* Battle::scene()
 bool Battle::init()
 {
     bool bRet = false;
-    do 
+    do
     {
 		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+		Target::player = player;
 		velocity = 2;
 		alfa = 0;
 		velocityX = 0;
@@ -64,7 +68,11 @@ bool Battle::init()
 		// Call game logic
 		this->schedule( schedule_selector(Battle::gameLogicBackgound), 0.0 );
 		this->schedule( schedule_selector(Battle::gameLogicPlayer), 0.0 );
-		this->schedule( schedule_selector(Battle::gameLogicTarget), 1.0 );
+		//this->schedule( schedule_selector(Battle::gameLogicTarget), 1.0 );
+
+		// add target
+		Target *target = Target::create();
+		addChild(target);
 
 		// enable keyboard
 		CCDirector::sharedDirector()->getKeyboardDispatcher()->addDelegate(this);
@@ -242,9 +250,7 @@ void Battle::gameLogicPlayer(float dt)
 }
 void Battle::gameLogicFire(float dt)
 {
-
 		this->fireSomeBullets();
-
 }
 
 void Battle::spriteMoveFinished(CCNode* sender)
@@ -284,7 +290,10 @@ void Battle::keyDown(int keyCode)
 
 void Battle::fireSomeBullets()
 {
-	Bullet *bullet = Bullet::create(player->getPosition(),alfa);
+	Bullet *bullet = Bullet::create( ccp(
+		player->getPositionX() + player->getContentSize().width/4*cos(alfa*M_PI/180),
+		player->getPositionY() + player->getContentSize().height/4*sin(alfa*M_PI/180)),
+		alfa, velocity);
 	addChild(bullet);
 }
 

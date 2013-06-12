@@ -130,6 +130,7 @@
     <Image Include="..\Resources\HelloWorld.png" />
     <Image Include="..\Resources\moveBack.png" />
     <Image Include="..\Resources\Player.png" />
+    <Image Include="..\Resources\target.png" />
     <Image Include="res\test.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Target.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
@@ -149,6 +151,7 @@
     <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Target.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\Resources\akon.mp3" />

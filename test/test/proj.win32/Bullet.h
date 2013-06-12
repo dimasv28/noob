@@ -3,21 +3,19 @@
 
 #include "cocos2d.h"
 #include "Box2D/Box2D.h"
-#include "BattleScene.h"
 
 using namespace cocos2d;
 
 class Bullet : public CCSprite
 {
 protected:
-	int alfaProt;
+	float velocity;
+	int alfa;
 
 	void update(float dt);
 
 public:
-	static Bullet* create(CCPoint point, int alfa);
-
-    virtual bool init();
+	static Bullet* create(CCPoint pointIn, int alfaIn, float velocityIn);
 };
 
 #endif  // __BULLET_H__

@@ -42,6 +42,9 @@
     <Image Include="..\Resources\bullet.png">
       <Filter>resource</Filter>
     </Image>
+    <Image Include="..\Resources\target.png">
+      <Filter>resource</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="test.rc">
@@ -67,6 +70,9 @@
     <ClInclude Include="Bullet.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="Target.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -82,6 +88,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Target.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
