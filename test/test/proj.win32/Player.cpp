@@ -30,7 +30,8 @@ Player* Player::create()
 	player->actualY = winSize.height/2;
 	player->leaveX = 0;
 	player->leaveY = 0;
-	
+	player->m_bIsDead = false;
+
 	player->initWithFile("player.png");
 	player->setScale(0.5);
 	player->setPosition( ccp(player->actualX, player->actualY) );
@@ -48,7 +49,7 @@ void Player::update(float dt)
 	velocityY = velocity * sin(alfa*M_PI/180);
 
 	//----- Player on the screen -----
-	if(actualX <= winSize.width/2 || actualX >= (2048-winSize.width/2))
+	if(actualX < winSize.width/2 || actualX > (2048-winSize.width/2))
 	{
 		setPositionX(getPositionX() + velocityX);
 	}
@@ -125,10 +126,7 @@ void Player::update(float dt)
 	if(actualY >= 80-abs(velocityY) && actualY <= 80+abs(velocityY))
 	// game over
 	{
-		CCSprite *gameOver = CCSprite::create("gameover.png");
-		gameOver->setPosition( ccp(winSize.width/2,winSize.height/2) );
-		addChild(gameOver,2);
-		pauseSchedulerAndActions();
+		m_bIsDead = true;
 	}
 	
 	actualX += velocityX;
@@ -141,7 +139,7 @@ CCPoint Player::getActualPoint()
 }
 CCPoint Player::getVelocityPoint()
 {
-	return ccp(actualX,actualY);
+	return ccp(velocityX,velocityY);
 }
 
 void Player::setAlfa(int newAlfa)

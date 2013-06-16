@@ -35,6 +35,8 @@ bool Battle::init()
     do
     {
 		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+		keyLeftFlag = false;
+		keyRightFlag = false;
 		
 		// add Player
 		player = Player::create();
@@ -78,7 +80,7 @@ void Battle::moveBackgraund(float dt)
 {
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	float actualX = player->getActualPoint().x;
-	float velocityX = player->getActualPoint().x;
+	float velocityX = player->getVelocityPoint().x;
 	CCRect rect = background->getTextureRect();
 	if(actualX > winSize.width/2 && actualX < (2048-winSize.width/2))
 	{
@@ -88,10 +90,23 @@ void Battle::moveBackgraund(float dt)
 			background->setTextureRect(CCRectMake(rect.origin.x+velocityX,rect.origin.y,rect.size.width,rect.size.height));
 		}
 	}
+
+	if(player->isDead())
+	{
+		CCSprite *gameOver = CCSprite::create("gameover.png");
+		gameOver->setPosition( ccp(winSize.width/2,winSize.height/2) );
+		addChild(gameOver,200);
+		player->pauseSchedulerAndActions();
+		pauseSchedulerAndActions();
+	}
 }
 
 void Battle::keyUp(int keyCode)
 {
+	unschedule( schedule_selector(Battle::rotatePlayerLeft));
+	unschedule( schedule_selector(Battle::rotatePlayerRight));
+	keyLeftFlag = false;
+	keyRightFlag = false;
 	if(keyCode == 27)
 	{// exit with Esc
 	    CCScene *pHelloScene = HelloWorld::scene();
@@ -101,13 +116,19 @@ void Battle::keyUp(int keyCode)
 
 void Battle::keyDown(int keyCode)
 {
-	if(keyCode == 38 || keyCode == 87 || keyCode == 37 || keyCode == 65)
+	if( (keyCode == LEFT_KEY || keyCode == UP_KEY || keyCode == W_KEY || keyCode == A_KEY) && !keyLeftFlag)
 	{// up key
-		player->setAlfa(player->getAlfa()+5);
+		keyLeftFlag = true;
+		keyRightFlag = false;
+		schedule( schedule_selector(Battle::rotatePlayerLeft), 0.0 );
+		unschedule( schedule_selector(Battle::rotatePlayerRight));
 	}
-	else if(keyCode == 40 || keyCode == 83 || keyCode == 39 || keyCode == 68)
+	else if( (keyCode == RIGHT_KEY || keyCode == DOWN_KEY || keyCode == D_KEY || keyCode == S_KEY) && !keyRightFlag)
 	{// down key
-		player->setAlfa(player->getAlfa()-5);
+		keyRightFlag = true;
+		keyLeftFlag = false;
+		schedule( schedule_selector(Battle::rotatePlayerRight), 0.0 );
+		unschedule( schedule_selector(Battle::rotatePlayerLeft));
 	}
 }
 
@@ -115,6 +136,16 @@ void Battle::fireSomeBullets(float dt)
 {
 	Bullet *bullet = Bullet::create();
 	addChild(bullet);
+}
+
+void Battle::rotatePlayerLeft(float dt)
+{
+	player->setAlfa(player->getAlfa()+5);
+}
+
+void Battle::rotatePlayerRight(float dt)
+{
+	player->setAlfa(player->getAlfa()-5);
 }
 
 void Battle::ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event)

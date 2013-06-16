@@ -9,8 +9,16 @@
 #include "Bullet.h"
 #include "Target.h"
 
-using namespace cocos2d;
+#define LEFT_KEY 37
+#define RIGHT_KEY 39
+#define UP_KEY 38
+#define DOWN_KEY 40
+#define A_KEY 65
+#define D_KEY 68
+#define W_KEY 87
+#define S_KEY 83
 
+using namespace cocos2d;
 class Player;
 
 class Battle : public CCLayer, public cocos2d::CCKeyboardDelegate
@@ -18,9 +26,13 @@ class Battle : public CCLayer, public cocos2d::CCKeyboardDelegate
 protected:
 	CCSprite *background;
 	Player *player;
+	bool keyLeftFlag;
+	bool keyRightFlag;
 
 	void moveBackgraund(float dt);
 	void fireSomeBullets(float dt);
+	void rotatePlayerLeft(float dt);
+	void rotatePlayerRight(float dt);
 
 	void keyUp(int keyCode);
 	void keyDown(int keyCode);

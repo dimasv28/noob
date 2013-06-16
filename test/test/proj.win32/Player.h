@@ -12,6 +12,7 @@ class Player : public CCSprite
 protected:
 	float velocity,velocityX,velocityY,actualX,actualY,leaveX,leaveY;
 	int alfa;
+	bool m_bIsDead;
 
 	void update(float dt);
 
@@ -22,6 +23,7 @@ public:
 	CCPoint getVelocityPoint();
 	float getVelocity();
 	int getAlfa();
+	bool isDead() { return m_bIsDead; }
 	
 	void setAlfa(int newAlfa);
 };

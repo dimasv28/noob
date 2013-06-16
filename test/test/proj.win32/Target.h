@@ -14,8 +14,11 @@ class Target : public CCSprite
 protected:
 	float velocity;
 	int alfa;
+	int view;
 
 	void update(float dt);
+	void addTarget(float dt);
+	void findPlayer();
 
 public:
 	static Player *player;
